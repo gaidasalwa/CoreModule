@@ -7,7 +7,6 @@
 
 import Alamofire
 import Foundation
-import AppModels
 
 public extension Endpoint {
     /// Récuprer les détails d'une annonce
