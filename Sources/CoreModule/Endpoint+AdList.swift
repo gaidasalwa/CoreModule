@@ -14,10 +14,14 @@ public extension Endpoint {
     /// - Returns: Endpoint AdList
     static func fetchAdList(body: Data) -> Endpoint {
         let headers = HTTPHeaders(arrayLiteral:
-            HTTPHeader(name: "Content-Type", value: "application/json"))
-
+                                    HTTPHeader(name: "Content-Type", value: "application/json"))
+        
         let urlResult = AppConstant.baseUrl + AppConstant.listUrl
-
-        return Endpoint(url: urlResult, method: .post, headers: headers, body: body)
+        
+        guard let endpoint = try? Endpoint(url: urlResult, method: .post, headers: headers, body: body) else {
+            fatalError("❌ Impossible de créer l'Endpoint")
+        }
+        
+        return endpoint
     }
 }

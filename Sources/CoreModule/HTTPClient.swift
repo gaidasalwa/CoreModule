@@ -3,13 +3,13 @@ import Foundation
 import Alamofire
 
 public protocol HTTPClientProtocol {
-    // ✅ Compatible avec iOS 12 (Completion Handler)
+    // Compatible avec iOS 12 (Completion Handler)
     func sendRequest<T: Decodable>(
         to url: URLRequest,
         completion: @escaping (Result<T, Error>) -> Void
     )
     
-    // ✅ Compatible avec iOS 13+ (Async/Await)
+    // Compatible avec iOS 13+ (Async/Await)
     @available(iOS 13.0, *)
     func sendRequest<T: Decodable>(to url: URLRequest) async throws -> T
 }
@@ -17,7 +17,7 @@ public protocol HTTPClientProtocol {
 public class HTTPClient: HTTPClientProtocol {
     public init() {}
     
-    // ✅ iOS 12 - Completion Handler
+    // iOS 12 - Completion Handler
     public func sendRequest<T: Decodable>(
         to url: URLRequest,
         completion: @escaping (Result<T, Error>) -> Void
@@ -29,17 +29,17 @@ public class HTTPClient: HTTPClientProtocol {
                 case .success(let data):
                     do {
                         let decodedObject = try JSONDecoder().decode(T.self, from: data)
-                        completion(.success(decodedObject)) // ✅ Retourne le succès
+                        completion(.success(decodedObject)) // Retourne le succès
                     } catch {
-                        completion(.failure(error)) // ✅ Gère l'erreur de parsing
+                        completion(.failure(error)) // Gère l'erreur de parsing
                     }
                 case .failure(let error):
-                    completion(.failure(error)) // ✅ Gère l'erreur réseau
+                    completion(.failure(error)) // Gère l'erreur réseau
                 }
             }
     }
     
-    // ✅ iOS 13+ - Async/Await
+    // iOS 13+ - Async/Await
     @available(iOS 13.0, *)
     public func sendRequest<T: Decodable>(to url: URLRequest) async throws -> T {
         
@@ -50,9 +50,9 @@ public class HTTPClient: HTTPClientProtocol {
                 case .success(let data):
                     do {
                         let decodedObject = try JSONDecoder().decode(T.self, from: data)
-                        continuation.resume(returning: decodedObject) // ✅ Résolution avec T
+                        continuation.resume(returning: decodedObject) // Résolution avec T
                     } catch {
-                        continuation.resume(throwing: error) // ✅ Gère l'erreur de parsing
+                        continuation.resume(throwing: error) // Gère l'erreur de parsing
                     }
                 case .failure(let error):
                     continuation.resume(throwing: error)
