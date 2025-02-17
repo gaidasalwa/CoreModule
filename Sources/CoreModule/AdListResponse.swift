@@ -8,13 +8,24 @@
 import Foundation
 
 public struct AdListResponse: Decodable {
-    public let paging: Paging
+    public let paging: Paging?
     public let data: [AdResponse]
+    
+    // Décode un tableau vide si "data" est absent
+    private enum CodingKeys: String, CodingKey {
+        case paging, data
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        paging = try container.decodeIfPresent(Paging.self, forKey: .paging)
+        data = try container.decodeIfPresent([AdResponse].self, forKey: .data) ?? []
+    }
 }
 
 public struct Paging: Decodable {
     let pageLength: Int
-    let after: String
+    let after: String?
     let before: String?
 }
 
