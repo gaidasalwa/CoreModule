@@ -17,7 +17,7 @@ public struct AdDetailResponse: Decodable {
     public let pictures: [String]
     public let parentCategoryLabel: String
     public let category: String
-    public let subCategory: String
+    public let subCategory: String?
     public let carbonValue: Double
     public let savings: Int
     public let location: LocationResponse
@@ -51,14 +51,14 @@ public struct AdDetailResponse: Decodable {
     public let validationTimestamp: Int
     public let consumptionRule: ConsumptionRule
     public let lifecycleRules: LifecycleRules
-    public let closingDateRequested: String
+    public let closingDateRequested: String?
     public let city: String
     public let country: String
     public let department: String?
     public let region: String
     public let bigSavings: Bool
     public let availableStock: Int
-    public let risenTimestampMs: Int
+    public let risenTimestampMs: Int?
     public let metadata: Metadata
     public let unlocked: Bool
 
@@ -106,8 +106,8 @@ public struct AuthorDetailResponse: Decodable {
 
 // MARK: - Complaints
 public struct Complaints: Codable {
-    let spam: Int
-    let offensive: Int
+    let spam: Int?
+    let offensive: Int?
     let total: Int
 }
 
@@ -125,7 +125,7 @@ public struct RisenDate: Codable {
 
 // MARK: - LifecycleRules
 public struct LifecycleRules: Codable {
-    let rising: Rising
+    let rising: Rising?
 }
 
 // MARK: - Rising
